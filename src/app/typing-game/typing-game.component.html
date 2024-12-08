@@ -1,0 +1,39 @@
+<div class="game-container">
+  <form [formGroup]="gameForm" *ngIf="!isGameRunning && !isGameEnded">
+    <h1 class="title">Select Game Duration</h1>
+    <div class="timer-options">
+      <label>
+        <input type="radio" formControlName="selectedTime" [value]="15" />
+        15 seconds
+      </label>
+      <label>
+        <input type="radio" formControlName="selectedTime" [value]="30" />
+        30 seconds
+      </label>
+      <label>
+        <input type="radio" formControlName="selectedTime" [value]="60" />
+        60 seconds
+      </label>
+    </div>
+    <button class="start-button" (click)="startGame()">Start Game</button>
+  </form>
+
+  <div *ngIf="isGameRunning">
+    <h1 class="title">Press the letter:</h1>
+    <div class="letter" [class.error]="errorOccurred">
+      {{ currentLetter }}
+    </div>
+    <div class="info">
+      <p>Time Remaining: {{ remainingTime }} seconds</p>
+      <p>Errors: {{ errors }}</p>
+    </div>
+    <button class="end-button" (click)="endGame()">End Game</button>
+  </div>
+
+  <div *ngIf="isGameEnded" class="results-overlay">
+    <h1 class="title">Game Over</h1>
+    <p *ngIf="spm !== null">Speed: {{ spm }} symbols per minute</p>
+    <p>Total Errors: {{ errors }}</p>
+    <button class="retry-button" (click)="playAgain()">Play Again</button>
+  </div>
+</div>
